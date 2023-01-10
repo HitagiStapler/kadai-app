@@ -45,6 +45,7 @@ class LoginController extends Controller
      */
     public function logout()
     {
+        delete(Session::put('user', $user));
         return redirect('/login');
     }
 }
