@@ -63,7 +63,7 @@ class PostController extends Controller
         // 投稿者を取得
         $user = $post->user();
 
-        $isOwnPost = false;
+        $isOwnPost = true;
 
         // セッションにログイン情報があるか確認
         if (Session::exists('user')) {
@@ -71,10 +71,10 @@ class PostController extends Controller
             $loginUser = Session::get('user');
             // 自分自身の投稿ページか判定
             $isOwnPost = $loginUser->id == $user->id;
+            return view('post.detail', compact('post', 'user', 'isOwnPost'));
         }
-
         // 画面表示
-        return view('post.detail', compact('post', 'user', 'isOwnPost'));
+
     }
 
     /**

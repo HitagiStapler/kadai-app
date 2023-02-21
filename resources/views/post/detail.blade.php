@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang=ja>
 
 <head>
     <meta charset="utf-8" />
@@ -13,8 +13,9 @@
 
 <body class="">
     <x-header></x-header>
+    @if (Session::exists('user'))
     <div class="page post-detail-page">
-        <div class="post">
+        <div class="post">   
             <a href="/user/{{ $user->id }}">
                 <div class="user-info">
                     <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
@@ -36,6 +37,17 @@
             </div>
         </div>
     </div>
+    @else
+    <a href="/user/{{ $user->id }}">
+                <div class="user-info">
+                    <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
+                    <div class="user-name">{{ $user->name }}</div>
+                </div>
+                <div class="content">{{ $post->content }}</div>
+                <div class="time-stamp">{{ $post->created_at }}</div>
+            </a>
+
+    @endif
 </body>
 <x-footer></x-footer>
 <script src="{{ asset('/js/app.js') }}"></script>
