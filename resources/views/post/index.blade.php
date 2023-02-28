@@ -23,6 +23,8 @@
         </form>
     </div>
 </body>
+
+
 <script src="{{ asset('/js/app.js') }}"></script>
 <style scoped>
     .post-page .form {

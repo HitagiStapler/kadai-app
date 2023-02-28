@@ -13,7 +13,7 @@
 
 <body class="">
     <x-header></x-header>
-    @if (Session::exists('user'))
+    @if ($isOwnPost)
     <div class="page post-detail-page">
         <div class="post">   
             <a href="/user/{{ $user->id }}">
@@ -38,7 +38,9 @@
         </div>
     </div>
     @else
-    <a href="/user/{{ $user->id }}">
+    <div class="page post-detail-page">
+        <div class="post">   
+            <a href="/user/{{ $user->id }}">
                 <div class="user-info">
                     <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
                     <div class="user-name">{{ $user->name }}</div>
@@ -46,7 +48,8 @@
                 <div class="content">{{ $post->content }}</div>
                 <div class="time-stamp">{{ $post->created_at }}</div>
             </a>
-
+        </div>
+    </div>
     @endif
 </body>
 <x-footer></x-footer>
