@@ -24,6 +24,20 @@
     </div>
 </body>
 
+@error('postContent')
+    <div class="mt-3">
+        <p class="text-red-500">
+            {{ $message }}
+        </p>
+    </div>
+@enderror
+
+<script src="{{ asset('/js/app.js') }}"></script>
+<script>
+    function unfollow() {
+        if (confirm("フォローを解除しますか?"));
+    }
+</script>
 
 <script src="{{ asset('/js/app.js') }}"></script>
 <style scoped>
