@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Block;
 
-class UserSeeder extends Seeder
+class BlockSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,25 +15,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'oca',
-            'email' => 'oca@email.com',
-            'biography' => 'ocaのアカウントです',
-            'password' => 'oca',
+        Follow::create([
+            'user' => '1',
+            'follow_user' => '2',
         ]);
-
-        User::create([
-            'name' => 'プログラマー名言bot',
-            'email' => 'meigen@email.com',
-            'biography' => 'プログラマーを名言投稿します',
-            'password' => 'meigen',
+        Follow::create([
+            'user' => '1',
+            'follow_user' => '3',
         ]);
-
-        User::create([
-            'name' => 'ElonMusk',
-            'email' => 'elonmusk@email.com',
-            'biography' => 'Twitter, テスラ CEO',
-            'password' => 'elonmusk',
+        Follow::create([
+            'user' => '2',
+            'follow_user' => '3',
         ]);
     }
 }
