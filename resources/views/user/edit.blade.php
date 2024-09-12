@@ -23,37 +23,37 @@
                 </div>
                 <div class="biography">
                     <label for="biography">自己紹介</label>
-                    <textarea name="biography" id="" cols="30" rows="10">{{ $user->biography }}</textarea
-                        >
-                    </div>
+                    <textarea name="biography" id="" cols="30" rows="10">{{ $user->biography }}</textarea>
                 </div>
-                <div class="save-button">
-                    <button class="button-white">変更を保存</button>
-                </div>
-            </form>
-        </div>
-    </body>
-    <script src="{{ asset('/js/app.js') }}"></script>
-    <style scoped>
-        .user-edit-page .user-name {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 10px;
-        }
+            </div>
+            <div class="save-button">
+                <button class="button-white">変更を保存</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="{{ asset('/js/app.js') }}"></script>
+<style scoped>
+    .user-edit-page .user-name {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
 
-        .user-edit-page .biography {
-            display: flex;
-            flex-direction: column;
-        }
+    .user-edit-page .biography {
+        display: flex;
+        flex-direction: column;
+    }
 
-        .user-edit-page .save-button {
-            display: flex;
-            justify-content: end;
-            margin: 10px 10px 0 0;
-        }
+    .user-edit-page .save-button {
+        display: flex;
+        justify-content: end;
+        margin: 10px 10px 0 0;
+    }
 
-        .user-edit-page label {
-            padding-left: 5px;
-        }
-    </style>
+    .user-edit-page label {
+        padding-left: 5px;
+    }
+</style>
+
 </html>

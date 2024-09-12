@@ -25,14 +25,14 @@
             </div>
         </div>
         <div id="follow-list" class="folllow-list user-list">
-            @foreach ($followUsers as $followUsers)
-            <a href="/user/{{ $followUsers->id }}">
+            @foreach ($followUsers as $followUser)
+            <a href="/user/{{ $followUser->id }}">
                 <div class="user-list-item">
                     <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
                     <div class="info">
-                        <div class="user-name">{{ $followUsers->name }}</div>
+                        <div class="user-name">{{ $followUser->name }}</div>
                         <div class="biography">
-                            {{ $followUsers->biography }}
+                            {{ $followUser->biography }}
                         </div>
                     </div>
                 </div>
@@ -40,16 +40,16 @@
             @endforeach
         </div>
         <div id="follower-list" class="folllower-list user-list">
-            @foreach ($followerUsers as $followerUsers)
-            <a href="/user/{{ $followerUsers->id }}">
+            @foreach ($followerUsers as $followerUser)
+            <a href="/user/{{ $followerUser->id }}">
                 <div class="user-list-item">
                     <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
                     <div class="info">
                         <div class="user-name">
-                            {{ $followerUsers->name }}
+                            {{ $followerUser->name }}
                         </div>
                         <div class="biography">
-                            {{ $followerUsers->biography }}
+                            {{ $followerUser->biography }}
                         </div>
                     </div>
                 </div>
@@ -91,41 +91,41 @@
         justify-content: space-evenly;
         height: 30px;
     }
-    
+
     .follow-page .tab-item {
         width: 50vw;
         text-align: center;
     }
-    
+
     .follow-page .user-icon {
         width: 35px;
         height: 35px;
         margin-right: 5px;
     }
-    
+
     .follow-page .user {
         font-size: larger;
         font-weight: bolder;
         padding: 5px 0 10px 10px;
     }
-    
+
     .follow-page .user-list-item {
         display: flex;
         padding: 0 0 10px 10px;
     }
-    
+
     .follow-page .user-name {
         font-weight: bold;
     }
-    
+
     .follow-page .biography {
         font-size: small;
     }
-    
+
     .follow-page .hidden {
         display: none;
     }
-    
+
     .follow-page .selected {
         text-decoration: underline overline lightblue;
     }

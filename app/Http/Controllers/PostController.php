@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Http\Controllers\Controller,
+use App\Http\Controllers\Controller,Validator,
     Session;
-use Illuminate\Support\Facades\Validator;
 
 
 class PostController extends Controller
@@ -29,8 +28,10 @@ class PostController extends Controller
     /**
      * 投稿処理
      */
+   
     function store(Request $request)
     {
+
         // セッションにログイン情報があるか確認
         if (!Session::exists('user')) {
             // ログインしていなければログインページへ
@@ -39,21 +40,24 @@ class PostController extends Controller
 
         // ログイン中のユーザーの情報を取得する
         $loginUser = Session::get('user');
-
-        $rules =[
-            'postContent' =>'required|max:140'
-        ];
-
-        $massages = ['required' => '投稿内容が未入力です。','max' =>'入力可能文字数は140以内です。'];
-
-        Validator::make($request->all(), $rules, $massages)->validate();
-
+        
+        $rules = [
+            'postContent' => 'required|max:140',
+          ];
+         
+          $errorMessage = ['required' => '必須項目です', 'max' => '140文字以下にしてください。'];
+          Validator::make($request->all(), $rules, $errorMessage)->validate();
+          
+        
+    
+        
+       
         // データ登録
         $post = new Post;
         $post->user = $loginUser->id;
         $post->content = $request->postContent;
         $post->save();
-
+       
         return redirect('/');
     }
 
@@ -90,6 +94,7 @@ class PostController extends Controller
     /**
      * 投稿編集画面
      */
+    
     public function edit($id)
     {
         $post = Post::find($id);
@@ -143,7 +148,7 @@ class PostController extends Controller
     /**
      * 投稿削除処理
      */
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
         // idから投稿を取得
         $post = Post::find($id);
@@ -168,8 +173,11 @@ class PostController extends Controller
 
         // データ登録
         $post->is_deleted = true;
-        $post->save();
+        $post->delete();
 
         return redirect('/');
+
+        
     }
+
 }

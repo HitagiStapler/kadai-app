@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Follow;
+use App\Models\Block;
 use App\Models\Post;
 
 class User extends Model
@@ -17,7 +18,6 @@ class User extends Model
     public function posts()
     {
         return Post::where('user', $this->id)
-            ->where('is_deleted', false)
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -29,12 +29,11 @@ class User extends Model
     {
         $followUsers = Follow::where('user', $this->id)->get();
         $result = [];
-        foreach ($followUsers as $followUsers) {
-            array_push($result, $followUsers->followUsers());
+        foreach ($followUsers as $followUser) {
+            array_push($result, $followUser->followUser());
         }
         return $result;
     }
-
 
     /**
      * ユーザーをフォローしているユーザーのリストを取得する
@@ -43,34 +42,19 @@ class User extends Model
     {
         $followerUsers = Follow::where('follow_user', $this->id)->get();
         $result = [];
-        foreach ($followerUsers as $followUsers) {
-            array_push($result, $followUsers->followerUsers());
+        foreach ($followerUsers as $followUser) {
+            array_push($result, $followUser->followerUser());
         }
         return $result;
     }
-
 
     /**
      * $idのユーザーがこのユーザーをフォローしているか判定する
      */
     public function isFollowed($id)
     {
-        foreach ($this->followUsers() as $followUsers) {
-            if ($followUsers->id == $id) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * $idのユーザーがこのユーザーをブロックしているか判定する
-     */
-    public function isBlocked($id)
-    {
-        foreach ($this->blockUsers() as $blockUser) {
-            if ($blockUser->block_user == $id) {
+        foreach ($this->followUsers() as $followUser) {
+            if ($followUser->id == $id) {
                 return true;
             }
         }
@@ -93,40 +77,83 @@ class User extends Model
      * $idのユーザーをフォロー解除する
      */
     public function unfollow($id)
+{
+    $follow = Follow::where('user', $this->id)
+        ->where('follow_user', $id)
+        ->first();
+
+    if ($follow) {
+        $follow->delete();
+    } else {
+        
+    }
+}
+ /*
+    *ユーザーがブロックしているユーザーのリストを取得する
+    */
+    public function blockUsers()
     {
-        Follow::where('user', $this->id)
-            ->where('follow_user', $id)
-            ->first()
-            ->delete();
+        $blockUsers = Block::where('user', $this->id)->get();
+        $result = [];
+        foreach ($blockUsers as $blockUser) {
+            array_push($result, $blockUser->blockUser());
+        }
+        return $result;
     }
 
-    /**
-     * $idのユーザーをブロックする
-     */
-    public function block($id)
+   /*
+    ユーザーをブロックしているユーザーのリストを取得する
+    */
+    public function blockerUsers()
     {
+        $blockerUsers = Block::where('block_user', $this->id)->get();
+        $result = [];
+        foreach ($blockerUsers as $blockUser) {
+            array_push($result, $blockUser->blockerUser());
+        }
+        return $result;
+    }
+
+    
+ 
+   /**
+     * $idのユーザーがこのユーザーをフォローしているか判定する
+     */
+    
+    public function isBlocked($id)
+    {
+        foreach ($this->blockUsers() as $blockUser) {
+            if ($blockUser->id == $id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function block($id)
+{
+    $exists = Block::where('user', $this->id)
+        ->where('block_user', $id)
+        ->exists();
+
+    if (!$exists) {
         $block = new Block;
         $block->user = $this->id;
         $block->block_user = $id;
         $block->save();
     }
+}
 
-    /**
-     * $idのユーザーをブロック解除する
-     */
-    public function unblock($id)
-    {
-        Block::where('user', $this->id)
-            ->where('block_user', $id)
-            ->first()
-            ->delete();
-    }
 
-    /**
-     * ユーザーがブロックしている側のユーザーのリストを取得する
-     */
-    public function blockUsers()
-    {
-        return Block::where('user', $this->id)->get();
+public function unblock($id)
+{
+    $block = Block::where('user', $this->id)
+        ->where('block_user', $id)
+        ->first();
+    
+    if ($block) {
+        $block->delete();
     }
+}
 }

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'oca',
             'email' => 'oca@email.com',
-            'biography' => 'ocaのアカウントです',
+            'biography' => '単位ほしいです',
             'password' => 'oca',
         ]);
 
