@@ -45,8 +45,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-        Session::flush('user', $user);
+        $request->session()->flush();
         return redirect('/login');
     }
 }

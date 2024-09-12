@@ -15,17 +15,17 @@ class BlockSeeder extends Seeder
      */
     public function run()
     {
-        Follow::create([
+        Block::create([
             'user' => '1',
-            'follow_user' => '2',
+            'block_user' => '2',
         ]);
-        Follow::create([
+        Block::create([
             'user' => '1',
-            'follow_user' => '3',
+            'block_user' => '3',
         ]);
-        Follow::create([
+        Block::create([
             'user' => '2',
-            'follow_user' => '3',
+            'block_user' => '3',
         ]);
     }
 }

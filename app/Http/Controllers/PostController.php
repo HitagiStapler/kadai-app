@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
 use App\Http\Controllers\Controller,
     Session;
+use Illuminate\Support\Facades\Validator;
+
 
 class PostController extends Controller
 {
@@ -39,13 +40,13 @@ class PostController extends Controller
         // ログイン中のユーザーの情報を取得する
         $loginUser = Session::get('user');
 
-        $rules = [
-            'postContent' => 'required|max:140',
-          ];
-      
-          $messages = ['required' => '1文字以上！！！！！！！！！！', 'max' => '140文字以下にしろ'];
-      
-          Validator::make($request->all(), $rules, $messages)->validate();
+        $rules =[
+            'postContent' =>'required|max:140'
+        ];
+
+        $massages = ['required' => '投稿内容が未入力です。','max' =>'入力可能文字数は140以内です。'];
+
+        Validator::make($request->all(), $rules, $massages)->validate();
 
         // データ登録
         $post = new Post;
@@ -72,7 +73,7 @@ class PostController extends Controller
         // 投稿者を取得
         $user = $post->user();
 
-        $isOwnPost = true;
+        $isOwnPost = false;
 
         // セッションにログイン情報があるか確認
         if (Session::exists('user')) {
@@ -80,10 +81,10 @@ class PostController extends Controller
             $loginUser = Session::get('user');
             // 自分自身の投稿ページか判定
             $isOwnPost = $loginUser->id == $user->id;
-            return view('post.detail', compact('post', 'user', 'isOwnPost'));
         }
-        // 画面表示
 
+        // 画面表示
+        return view('post.detail', compact('post', 'user', 'isOwnPost'));
     }
 
     /**
@@ -167,7 +168,7 @@ class PostController extends Controller
 
         // データ登録
         $post->is_deleted = true;
-        $post->delete();
+        $post->save();
 
         return redirect('/');
     }

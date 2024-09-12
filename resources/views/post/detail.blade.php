@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=ja>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8" />
@@ -13,9 +13,8 @@
 
 <body class="">
     <x-header></x-header>
-    @if ($isOwnPost)
     <div class="page post-detail-page">
-        <div class="post">   
+        <div class="post">
             <a href="/user/{{ $user->id }}">
                 <div class="user-info">
                     <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
@@ -24,6 +23,7 @@
                 <div class="content">{{ $post->content }}</div>
                 <div class="time-stamp">{{ $post->created_at }}</div>
             </a>
+            @if ($isOwnPost)
             <div class="menu">
                 <div class="menu-item font-blue">
                     <a href="/post/edit/{{ $post->id }}">編集</a>
@@ -35,22 +35,9 @@
                     </div>
                 </form>
             </div>
+            @endif
         </div>
     </div>
-    @else
-    <div class="page post-detail-page">
-        <div class="post">   
-            <a href="/user/{{ $user->id }}">
-                <div class="user-info">
-                    <img class="user-icon" src="{{ asset('/img/user_icon.png') }}" alt="" />
-                    <div class="user-name">{{ $user->name }}</div>
-                </div>
-                <div class="content">{{ $post->content }}</div>
-                <div class="time-stamp">{{ $post->created_at }}</div>
-            </a>
-        </div>
-    </div>
-    @endif
 </body>
 <x-footer></x-footer>
 <script src="{{ asset('/js/app.js') }}"></script>

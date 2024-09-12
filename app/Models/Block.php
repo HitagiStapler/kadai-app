@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,19 +9,13 @@ class Block extends Model
 {
     use HasFactory;
 
-    /**
-     * フォローしている側のユーザーを取得する
-     */
-    public function followUser()
-    {
-        return User::find($this->follow_user);
-    }
+    
+ 
 
-    /**
-     * フォローされている側のユーザーを取得する
-     */
-    public function followerUser()
-    {
-        return User::find($this->user);
-    }
-}
+
+
+
+
+
+   
+}     
